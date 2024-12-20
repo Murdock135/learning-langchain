@@ -1,15 +1,23 @@
 import pandas as pd
-
-from langchain_community.utilities import SQLDatabase
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, inspect
 from dotenv import load_dotenv, find_dotenv
+import os
+
 _ = load_dotenv(find_dotenv())
 
-# load dataset as pandas dataframe
+# Load dataset as pandas dataframe
 data_path = 'titanic.csv'
 df = pd.read_csv(data_path)
 
 # Create SQL engine
 engine = create_engine("sqlite:///titanic.db")
-df.to_sql("titanic", engine, index=False)
+
+# Load csv as sql table
+inspector = inspect(engine)
+if "titanic" in inspector.get_table_names():
+    print("Table 'titanic' already exists. Data not written to database.")
+else:
+    # Write to SQL database only if table doesn't exist
+    df.to_sql("titanic", engine, index=False)
+    print("Data written to the database.")
 
