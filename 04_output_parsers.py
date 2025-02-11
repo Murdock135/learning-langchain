@@ -2,7 +2,7 @@
 This lesson covers creating output parsers and then using it. To create an output parser,
 1. We use from_response_schemas() from the StructuredOutputParser module.
 2. from_response_schemas() takes a list of ResponseSchema objects.
-3. Get formatting instructions using get_format_instructions(), a method withing StructuredOutputParser.
+3. Get formatting instructions using get_format_instructions(), a method within StructuredOutputParser.
 4. Use the formatting instructions in the system template (refer to lesson 02 to know more about system templates)
 """
 

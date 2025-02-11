@@ -1,3 +1,25 @@
+"""
+Lesson 09: Binding Tools to Language Models in LangGraph
+
+This script demonstrates how to bind tools (functions) to a language model within a LangGraph workflow.
+Key concepts covered:
+- Creating a simple tool (multiply function)
+- Binding tools to a ChatOpenAI model
+- Building a basic graph workflow with the tool-enabled model
+- Processing messages through the graph
+
+The graph consists of a single node that processes messages using the tool-enabled model.
+The multiply tool allows the model to perform multiplication operations when requested.
+
+Example usage:
+    messages = [
+        HumanMessage(content="Hi"),
+        AIMessage(content="Hello"),
+        HumanMessage(content="multiply 2 and 3")
+    ]
+    response = graph.invoke({"messages": messages})
+"""
+
 from dotenv import find_dotenv, load_dotenv
 from utils import save_graph
 
@@ -24,9 +46,14 @@ model = model.bind_tools([multiply])
 def call_model(state: MessagesState):
     return {"messages": model.invoke(state["messages"])}
 
+# ----------------------------------
 # Build graph
+# ----------------------------------
+# Add nodes
 workflow = StateGraph(MessagesState)
 workflow.add_node("model", call_model)
+
+# Add edges
 workflow.add_edge(START, "model")
 workflow.add_edge("model", END)
 graph = workflow.compile()

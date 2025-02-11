@@ -31,11 +31,11 @@ class State(TypedDict):
 # Step 3: Create trimmer
 trimmer = trim_messages(
     max_tokens=65,
-    strategy="last",
+    strategy="last", # Keep the last '<= n_count' tokens of the messages.
     token_counter=model,
-    include_system=True,
-    allow_partial=False,
-    start_on="human",
+    include_system=True, # Include the system message
+    allow_partial=False, # Whether to split a message if only part of the message can be included
+    start_on="human", # The message type to start on. Note: Read more in function definition.
 )
 
 # Example conversation

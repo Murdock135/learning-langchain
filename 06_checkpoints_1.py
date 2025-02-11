@@ -15,6 +15,11 @@ StateSnapshot object has the following attributes
 
 tasks:- A tuple of 'PregelTask' objects that contain information about subsequent
 tasks.
+
+Notes:
+1. In the State object, the class attribute 'foo' is initialized as an int type.
+But the nodes created afterwards override this into a string type. I'm not sure
+why langchain's documentation decided to do it like this.
 """
 
 from langgraph.graph import StateGraph, START, END
