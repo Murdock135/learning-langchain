@@ -14,6 +14,8 @@ from langgraph.prebuilt import create_react_agent
 from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
 
+import code
+
 # create search tool for chat model (In this case TavilySearch)
 search = TavilySearchResults(max_results=2)
 tools = [search]
@@ -29,5 +31,7 @@ agent_executor = create_react_agent(model, tools)
 prompt = "What's the weather in Columbia, Missouri?"
 response = agent_executor.invoke({"messages": [HumanMessage(content=prompt)]})
 
-print(response["messages"])
-
+for message in response['messages']:
+    message.pretty_print()
+# Drop into an interactive shell with access to local variables
+# code.interact(local=locals())
